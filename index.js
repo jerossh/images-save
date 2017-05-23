@@ -44,11 +44,14 @@ function saveImgs(req, res, path, imgsName, newNamearg, cb) {
       const img = newName+'.'+ext;
       const newPath = `${uploadPath}/${e}/`;  // 必须加点
       const newFile = newPath + img;
-      // if (ext === 'png') {
-      //   imgOpt = new OptiPng(['-o7']);
-      // }
-      
       debug(ext)
+      if (ext == 'png') {
+        optiImg = new OptiPng(['-o7']);
+      } else {
+        optiImg = new JpegTran(['-rotate', 90, '-progressive']);
+      }
+      
+
 
       mkdirp(newPath, function(){
         readData.pipe(optiImg).pipe(fs.createWriteStream(newFile))

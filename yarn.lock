@@ -575,7 +575,7 @@ beeper@^1.0.0:
   version "1.1.1"
   resolved "http://registry.npm.taobao.org/beeper/download/beeper-1.1.1.tgz#e6d5ea8c5dad001304a70b22638447f69cb2f809"
 
-bin-build@^2.0.0:
+bin-build@^2.0.0, bin-build@^2.2.0:
   version "2.2.0"
   resolved "http://registry.npm.taobao.org/bin-build/download/bin-build-2.2.0.tgz#11f8dd61f70ffcfa2bdcaa5b46f5e8fedd4221cc"
   dependencies:
@@ -2797,6 +2797,14 @@ optipng-bin@3.1.4, optipng-bin@^3.0.0:
   resolved "http://registry.npm.taobao.org/optipng-bin/download/optipng-bin-3.1.4.tgz#95d34f2c488704f6fd70606bfea0c659f1d95d84"
   dependencies:
     bin-build "^2.0.0"
+    bin-wrapper "^3.0.0"
+    logalot "^2.0.0"
+
+optipng-bin@^4.0.0:
+  version "4.0.0"
+  resolved "http://registry.npm.taobao.org/optipng-bin/download/optipng-bin-4.0.0.tgz#92b937d97ee67fe8a2d29bbcec6b8cee8f1a867e"
+  dependencies:
+    bin-build "^2.2.0"
     bin-wrapper "^3.0.0"
     logalot "^2.0.0"
 
