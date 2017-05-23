@@ -14,9 +14,9 @@ app.use(multipart());
 
 
 app.post('/upload', function (req, res) {
-    debug('上传了', req.files);
-    imgSave(req, res, '', ['img1', 'img2'], '', function () {
-        debug('到这里就是成功了');
+    // debug('上传了', req.files);
+    imgSave(req, res, 'public/upload', ['img1', 'img2'], '', function () {
+        // debug('到这里就是成功了');
         res.redirect('.')
     })
     
