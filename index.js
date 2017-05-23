@@ -1,7 +1,13 @@
 'use strict'
 const path = require('path');
 const fs = require('fs');
-const mkdirp = require('mkdirp')
+const mkdirp = require('mkdirp');
+const imagemin = require('imagemin');
+const minimatch = require("minimatch");
+const cryptoRandomString = require('crypto-random-string');
+const JpegTran = require('jpegtran');
+
+// const imagemin = require('gulp-imagemin');
 
 /**
  * 用于快速存储 图片等
@@ -20,21 +26,23 @@ function saveImgs(req, res, path, imgsName, newName, cb) {
   var imgsLength = imgsName.length;
   var imgData, filePath, originalName;
   var ext, count = 0;
-  var uploadPath = path || './public'
+  var uploadPath = path || './public';
+  var newName = newName || Date.now() + cryptoRandomString(6);
+  const  myJpegTranslator = new JpegTran(['-rotate', 90, '-progressive']);
 
   imgsName.forEach(function (e, i, arr) {
     imgData = req.files[e];
     filePath = imgData.path;
     originalName = imgData.originalFilename;
 
-    if (originalName) {
+    if (originalName && minimatch(originalName, "*.+(jpg|jpeg|png)")) {
       var readData = fs.createReadStream(filePath)
       ext = originalName.split('.')[1];
       var img = newName+'.'+ext;
       const newPath = `${uploadPath}/${e}/`;  // 必须加点
       var newFile = newPath + img;
       mkdirp(newPath, function(){
-        readData.pipe(fs.createWriteStream(newFile))
+        readData.pipe(myJpegTranslator).pipe(fs.createWriteStream(newFile))
           .on('err', () => {imgsLength--;count--})
           .on('finish', ()=> {
             req[e] = `${e}/${img}`
