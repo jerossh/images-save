@@ -10,6 +10,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "del": "^2.2.2",
     "express": "^4.15.3"
   }
 }
