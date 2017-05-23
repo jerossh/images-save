@@ -1,0 +1,30 @@
+{
+  "name": "images-save",
+  "version": "0.0.1",
+  "description": "用快速存储上传的图片",
+  "main": "index.js",
+  "scripts": {
+    "test": "ava"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jerossh/images-save.git"
+  },
+  "keywords": [
+    "image",
+    "img",
+    "image-save"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jerossh/images-save/issues"
+  },
+  "homepage": "https://github.com/jerossh/images-save#readme",
+  "dependencies": {
+    "mkdirp": "^0.5.1"
+  },
+  "devDependencies": {
+    "ava": "^0.19.1"
+  }
+}
