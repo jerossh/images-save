@@ -38,10 +38,11 @@ app.post('/upload', function (req, res) {
 });
 
 ```
+HMTL part:
+
+```html
   <input type='file' name="img1" >
   <input type='file' name="img2" >
-```html
-
 
 ```
 
@@ -57,3 +58,4 @@ app.post('/upload', function (req, res) {
  ## return 
 
 req[imgsName]
+
