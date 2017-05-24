@@ -48,14 +48,15 @@ HMTL part:
 
 ## param
 
- *  {Object} [req] express 路由中的 req
- *  {Object} [res] express 路由中的 res
- *  {Array} [imgsName] A string (or array of strings) representing cookie signing secret(s).
- *  {String} [newName]
- *  {String} [cb] 回调函数
+ *  {Object} [req] express route req
+ *  {Object} [res] express route res
+ *  {String} [path] where to save, defaul: './public'
+ *  {Array} [imgsName] input name attribute
+ *  {String} [newNameForImg] new name for images
+ *  {Functon} [cb] callback
  *  {Object} images link in req[imgsName]
 
- ## return 
+## return 
 
 req[imgsName]
 

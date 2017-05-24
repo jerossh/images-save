@@ -1,6 +1,6 @@
 {
   "name": "images-save",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "用快速存储上传的图片",
   "main": "index.js",
   "scripts": {
