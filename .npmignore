@@ -1,5 +1,7 @@
 node_modules
 example
 yarn.lock
+index.next.js
+bug.md
 .vscode
 .gitignore

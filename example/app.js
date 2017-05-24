@@ -24,7 +24,6 @@ app.post('/upload', function (req, res) {
         // debug('到这里就是成功了');
         res.redirect('.')
     })
-    
 })
 app.listen(3000);
 console.log('listening on port 3000');

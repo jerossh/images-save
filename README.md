@@ -1,8 +1,59 @@
-用于 快速处理 上传的 图片文件
-## images-save
+# images-save
 
-## bug
-- 一张jpg 图片没问题，一张 png 图片没问题
-- 一张 jpg、一张png 一起上传数据量出错 The optipng process exited with a non-zero exit code
-- 两张 png 写入步骤出错 
-- 两张 jpg 如果 用 node 启动： JpegTran: The stdout stream ended without emitting any data；如果 使用nodemon 则 正常
+Save multy images quickly
+
+## Installation
+
+```bash
+npm install images-save
+```
+
+## Usage 
+
+```js
+saveImgs(req, res, path, imgsName, newNamearg, cb)
+```
+
+#### Example
+
+```js
+const express = require('express');
+const app = express();
+const imgSave = require('images-save');
+const imgSave = require('images-save');
+const models = require('./models');
+
+app.post('/upload', function (req, res) {
+    const id = req.body.item.id;
+    // ['img1', 'img2'] tow imgs to upload,
+    imgSave(req, res, 'public/upload', ['img1', 'img2'], '', function () {
+        models.findById(id).then((data) => {
+            data['img1'] = req['img1'];
+            data['img1'] = req['img1'];
+            data.save()
+            return res.redirect('.');
+        })
+        
+    })
+});
+
+```
+  <input type='file' name="img1" >
+  <input type='file' name="img2" >
+```html
+
+
+```
+
+## param
+
+ *  {Object} [req] express 路由中的 req
+ *  {Object} [res] express 路由中的 res
+ *  {Array} [imgsName] A string (or array of strings) representing cookie signing secret(s).
+ *  {String} [newName]
+ *  {String} [cb] 回调函数
+ *  {Object} images link in req[imgsName]
+
+ ## return 
+
+req[imgsName]
