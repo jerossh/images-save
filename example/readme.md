@@ -1,14 +1,4 @@
-# 怎么使用这个 例子
-如果没有全局安装 nodemon，有则跳过
+这个是 测试包， 不小心发布的， 删啊都不能删，麻烦。
+、、、、、
 
-```
-yarn global add nodemon
-```
-
-接下来
-
-```
-yarn
-npm start
-```
-
+bad module

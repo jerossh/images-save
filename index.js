@@ -2,11 +2,11 @@
 const path = require('path');
 const fs = require('fs');
 const mkdirp = require('mkdirp');
-const imagemin = require('imagemin');
-const minimatch = require("minimatch");
 const cryptoRandomString = require('crypto-random-string');
-const JpegTran = require('jpegtran');
-const OptiPng = require('optipng');
+// const imagemin = require('imagemin');
+// const minimatch = require("minimatch");
+// const JpegTran = require('jpegtran');
+// const OptiPng = require('optipng');
 const debug = require('debug')('save');
 
 // const imagemin = require('gulp-imagemin');
@@ -23,44 +23,67 @@ const debug = require('debug')('save');
  * @public
  */
 
-function saveImgs(req, res, path, imgsName, newNameForImg, cb) {
 
-  let imgData, filePath, originalName, count = 0;
-  const imgsLength = imgsName.length;
-  const uploadPath = path || './public';
-  const newName = newNameForImg || Date.now() + cryptoRandomString(6);
+// const option = {
+//     files: req.files,
+//     path: 'public/upload',
+//     imgsName: [], // defalut: req.filse[input[name]]
+//     newNameForImg: '', // defalut: 
+// }
 
-  imgsName.forEach(function (e, i, arr) {
-    imgData = req.files[e];
-    filePath = imgData.path;
-    originalName = imgData.originalFilename;
+// function saveImgs(req, res, path, imgsName, newNameForImg, cb) {
+function saveImgs(option) {
+  return new Promise(function(resolve, reject) {
 
-    if (originalName) {
-      const readData = fs.createReadStream(filePath);
-      const ext = originalName.split('.')[1];
-      const img = newName+'.'+ext;
-      const newPath = `${uploadPath}/${e}/`;  // 必须加点
-      const newFile = newPath + img;
-
-      
-      mkdirp(newPath, function(){
-        readData.pipe(optiImg).pipe(fs.createWriteStream(newFile))
-          .on('err', () => {imgsLength--;count--})
-          .on('finish', ()=> {
-            req[e] = `${e}/${img}`
-            count++;
-            if (count === imgsLength) {
-              cb();
-            }
-          });
-      })
-    }  else {
-      count++;
-      if (count === imgsLength) {
-        cb()
+    const { files, path, imgsName, newNameForImg } = option;
+    // debug(files, '参数')
+    if (!Array.isArray(imgsName) ) {reject(new TypeError('hope an array'))}
+    if (imgsName.length == 0) {
+      let temNum = 0;
+      for (let imgName in files) {
+        imgsName[temNum++] = imgName;
       }
     }
-  })  // 循环结束
+
+    let imgObj, filePath, originalName, imgslink = {}, count = 0;
+    const imgsLength = imgsName.length;
+    const uploadPath = path || './public';
+    const newName = newNameForImg || Date.now() + cryptoRandomString(6);
+
+    imgsName.forEach(function (e, i, arr) {
+      imgObj = files[e];
+      if (!imgObj) {reject(new Error(`can't find ${e}, please check imgsName again`))}
+      filePath = imgObj.path;
+      originalName = imgObj.originalFilename;
+
+      if (originalName) {
+        const readData = fs.createReadStream(filePath);
+        const ext = originalName.split('.')[1];
+        const img = newName+'.'+ext;
+        const newPath = `${uploadPath}/${e}/`;  // 必须加点
+        const newFile = newPath + img;
+
+        mkdirp(newPath, function() {
+          readData.pipe(fs.createWriteStream(newFile))
+            .on('err', () => {imgsLength--; count--; return console.log('写入发生错误')})
+            .on('finish', ()=> {
+
+              imgslink[e] = `${e}/${img}`;
+              count++;
+
+              if (count === imgsLength) {
+                resolve(imgslink)
+              }
+            });
+        })
+      }  else {
+        count++;
+        if (count === imgsLength) { 
+          resolve(imgslink)
+        }
+      }
+    })  // 循环结束
+  })  
 }
 
 module.exports = saveImgs

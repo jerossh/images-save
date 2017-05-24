@@ -18,12 +18,32 @@ del(['public/upload']).then(paths => {
     console.log('Deleted files and folders:\n', paths.join('\n'));
 });
 
+debug(Promise)
+
 app.post('/upload', function (req, res) {
+
+    const option = {
+        files: req.files,
+        path: 'public/upload',
+        imgsName: ['img1'], // defalut: req.filse[input[name]]
+        newNameForImg: 'one', // defalut: 
+    }
+
+    const option2 = {
+        files: req.files,
+        path: 'public/upload2',
+        imgsName: ['img2'], // defalut: req.filse[input[name]]
+        newNameForImg: 'ttttt', // defalut: 
+    }
     // debug('上传了', req.files);
-    imgSave(req, res, 'public/upload', ['img1', 'img2'], '', function () {
-        // debug('到这里就是成功了');
-        res.redirect('.')
-    })
+    // imgSave(req, res, 'public/upload', ['img1', 'img2'], '', function () {
+    imgSave(option).then(data => {
+        debug(data)
+        imgSave(option2).then(data => {
+            res.redirect('.');
+        }) 
+    }) 
+    
 })
 app.listen(3000);
 console.log('listening on port 3000');
