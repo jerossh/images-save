@@ -1,5 +1,7 @@
 # images-save
-Save multy images quickly
+
+Save multy images quickly / 多图片快速保存到多位置
+
 ## Installation
 
 ```bash
@@ -15,7 +17,8 @@ HTML part:
   <input type='file' name="img2" >
 
 ```
-one folder
+one folder ／ 保存到一个位置
+
 ```js
 const express = require('express');
 const app = express();
@@ -28,7 +31,7 @@ app.post('/upload', function (req, res) {
 
 ```
 
-multi folders to save
+multi folders to save ／ 不同图保存到 不同位置
 
 ```js
     const option = { files: req.files, path: 'public/upload', imgsName: ['img1'],  newNameForImg: 'one'}
