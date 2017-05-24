@@ -23,12 +23,12 @@ const debug = require('debug')('save');
  * @public
  */
 
-function saveImgs(req, res, path, imgsName, newNamearg, cb) {
+function saveImgs(req, res, path, imgsName, newNameForImg, cb) {
 
   let imgData, filePath, originalName, count = 0;
   const imgsLength = imgsName.length;
   const uploadPath = path || './public';
-  const newName = newNamearg || Date.now() + cryptoRandomString(6);
+  const newName = newNameForImg || Date.now() + cryptoRandomString(6);
 
   imgsName.forEach(function (e, i, arr) {
     imgData = req.files[e];

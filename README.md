@@ -11,7 +11,7 @@ npm install images-save
 ## Usage 
 
 ```js
-saveImgs(req, res, path, imgsName, newNamearg, cb)
+saveImgs(req, res, path, imgsName, newNameForImg, cb)
 ```
 
 #### Example
