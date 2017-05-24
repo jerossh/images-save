@@ -1,7 +1,5 @@
 # images-save
-
 Save multy images quickly
-
 ## Installation
 
 ```bash
@@ -17,7 +15,6 @@ HTML part:
   <input type='file' name="img2" >
 
 ```
-
 one folder
 ```js
 const express = require('express');
