@@ -1,7 +1,7 @@
 {
   "name": "images-save",
-  "version": "0.1.1",
-  "description": "用快速存储上传的图片",
+  "version": "0.1.2",
+  "description": "Save multi images quickly / 多图片快速保存到多位置",
   "main": "index.js",
   "scripts": {
     "test": "ava"
