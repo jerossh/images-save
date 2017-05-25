@@ -14,7 +14,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(multipart());
 
 // 删除文件夹
-del(['public/upload']).then(paths => {
+del(['public/*', '!public/index.html']).then(paths => {
     console.log('Deleted files and folders:\n', paths.join('\n'));
 });
 
@@ -33,7 +33,7 @@ app.post('/upload', function (req, res) {
         files: req.files,
         path: 'public/upload2',
         imgsName: ['img2'], // defalut: req.filse[input[name]]
-        newNameForImg: 'ttttt', // defalut: 
+        newNameForImg: 'tow', // defalut: 
     }
     // debug('上传了', req.files);
     // imgSave(req, res, 'public/upload', ['img1', 'img2'], '', function () {
