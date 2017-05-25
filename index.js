@@ -11,18 +11,6 @@ const debug = require('debug')('save');
 
 // const imagemin = require('gulp-imagemin');
 
-/*
- * 用于快速存储 图片等
- *
- * @param {Object} [req] express 路由中的 req
- * @param {Object} [res] express 路由中的 res
- * @param {Array} [imgsName] A string (or array of strings) representing cookie signing secret(s).
- * @param {String} [newName]
- * @param {String} [cb] 回调函数
- * @return {Object} 返回 图片在地址 写入 req[imgsName]，方便后续调用
- * @public
- */
-
 
 // const option = {
 //     files: req.files,
@@ -31,7 +19,6 @@ const debug = require('debug')('save');
 //     newNameForImg: '', // defalut: 
 // }
 
-// function saveImgs(req, res, path, imgsName, newNameForImg, cb) {
 function saveImgs(option) {
   return new Promise(function(resolve, reject) {
 
@@ -45,7 +32,7 @@ function saveImgs(option) {
       }
     }
 
-    let imgObj, filePath, originalName, imgslink = {}, count = 0;
+    let imgObj, filePath, originalName, ext, imgslink = {}, count = 0;
     const imgsLength = imgsName.length;
     const uploadPath = path || './public';
     const newName = newNameForImg || Date.now() + cryptoRandomString(6);
@@ -55,10 +42,10 @@ function saveImgs(option) {
       if (!imgObj) {reject(new Error(`can't find ${e}, please check imgsName again`))}
       filePath = imgObj.path;
       originalName = imgObj.originalFilename;
+      ext = imgObj.type.split('/')[1];
 
       if (originalName) {
         const readData = fs.createReadStream(filePath);
-        const ext = originalName.split('.')[1];
         const img = newName+'.'+ext;
         const newPath = `${uploadPath}/${e}/`;  // 必须加点
         const newFile = newPath + img;
@@ -87,3 +74,16 @@ function saveImgs(option) {
 }
 
 module.exports = saveImgs
+
+// { fieldName: 'img2',
+// originalFilename: '10.url.png',
+// path: '/var/folders/dn/rbczn1wn0bnf9zsxb6gkf50m0000gn/T/DPhBlFOc2CCjJ_DrRSJdAzMl.png',
+// headers:
+// { 'content-disposition': 'form-data; name="img2"; filename="10.url.png"',
+//   'content-type': 'image/png' },
+// size: 175321,
+// name: '10.url.png',
+// type: 'image/png' }
+
+
+// JPG和JPEG其实是一个东西

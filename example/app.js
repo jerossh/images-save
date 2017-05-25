@@ -15,10 +15,9 @@ app.use(multipart());
 
 // 删除文件夹
 del(['public/*', '!public/index.html']).then(paths => {
-    console.log('Deleted files and folders:\n', paths.join('\n'));
+    debug('Deleted files and folders:\n', paths.join('\n'));
 });
 
-debug(Promise)
 
 app.post('/upload', function (req, res) {
 
@@ -40,6 +39,7 @@ app.post('/upload', function (req, res) {
     imgSave(option).then(data => {
         debug(data)
         imgSave(option2).then(data => {
+            debug(data)
             res.redirect('.');
         }) 
     }) 
