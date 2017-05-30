@@ -6,15 +6,15 @@ const cryptoRandomString = require('crypto-random-string');
 const imagemin = require('imagemin');
 // const minimatch = require("minimatch");
 const debug = require('debug')('save');
-
-// const imagemin = require('gulp-imagemin');
-
+const imageminJpegtran = require('imagemin-jpegtran');
+const imageminPngquant = require('imagemin-pngquant');
+const imageminGifsicle = require('imagemin-gifsicle');
+const imageminSvgo = require('imagemin-svgo');
 
 // const option = {
 //     files: req.files,
 //     path: 'public/upload',
 //     imgsName: [], // defalut: req.filse[input[name]]
-//     newNameForImg: '', // defalut: 
 // }
 
 function saveImgs(option) {
@@ -52,30 +52,17 @@ function saveImgs(option) {
         imagemin([filePath], newPath, {
           plugins: [
               imageminJpegtran(),
-              imageminPngquant({quality: '65-80'})
+              imageminPngquant({quality: '65-80'}),
+              imageminGifsicle(),
+              imageminSvgo()
           ]
         }).then((files)=> {
-          files[0].data.pipe(fs.createWriteStream(newFile))
-        })
-
-
-
-        // mkdirp(newPath, function() {
-        //   readData.pipe(fs.createWriteStream(newFile))
-        //     .on('err', () => {imgsLength--; count--; return console.log('写入发生错误')})
-        //     .on('finish', ()=> {
-
-        //       imgslink[e] = `${e}/${img}`;
-        //       count++;
-
-        //       if (count === imgsLength) {
-        //         resolve(imgslink)
-        //       }
-        //     });
-        // })
-        
-
-
+          imgslink[e] = files[0].path;
+          count++;
+          if (count === imgsLength) {
+              resolve(imgslink)
+          }
+        }).catch(err=> reject(err))        
       }  else {
         count++;
         if (count === imgsLength) { 
@@ -87,6 +74,21 @@ function saveImgs(option) {
 }
 
 module.exports = saveImgs
+
+// mkdirp(newPath, function() {
+//   readData.pipe(fs.createWriteStream(newFile))
+//     .on('err', () => {imgsLength--; count--; return console.log('写入发生错误')})
+//     .on('finish', ()=> {
+
+//       imgslink[e] = `${e}/${img}`;
+//       count++;
+
+//       if (count === imgsLength) {
+//         resolve(imgslink)
+//       }
+//     });
+// })
+
 
 // { fieldName: 'img2',
 // originalFilename: '10.url.png',

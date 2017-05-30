@@ -30,7 +30,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(multipart());
 
 app.post('/upload', function (req, res) {
-    const option = { files: req.files, path: 'public/upload', imgsName: ['img1'], newNameForImg: 'one'};
+    const option = { files: req.files, path: 'public/upload', imgsName: ['img1']};
     imgSave(option).then(data => res.redirect('.')) ;
 });
 
@@ -42,26 +42,25 @@ console.log('listening on port 3000');
 multi folders to save ／ 不同图保存到 不同位置
 
 ```js
-    const option = { files: req.files, path: 'public/upload', imgsName: ['img1'],  newNameForImg: 'one'};
-    const option2 = {files: req.files, path: 'public/upload2', imgsName: ['img2'],  newNameForImg: 'ttttt'};
- 
-    imgSave(option).then(data => {
-        imgSave(option2).then(data => {
-            res.redirect('.');
-        }); 
+const option = { files: req.files, path: 'public/upload', imgsName: ['img1']};
+const option2 = {files: req.files, path: 'public/upload2', imgsName: ['img2']};
+
+imgSave(option).then(data => {
+    imgSave(option2).then(data => {
+        res.redirect('.');
     }); 
+}); 
 ```
 
 
 ## param
 
 ```js
-    {
-        files: req.files, // require
-        path: 'public/upload', // defalut 'public/'
-        imgsName: ['img1', 'img4'], // defalut: All images you upload
-        newNameForImg: 'custom-name', // defalut: Date.now() + randomString(7)
-    }
+{
+    files: req.files, // require
+    path: 'public/upload', // defalut 'public/'
+    imgsName: ['img1', 'img4'], // defalut: All images you upload
+}
 ```
 
 
@@ -71,8 +70,8 @@ return promise
 
 HTML part:
 ```html
-  <input type='file' name="img1" >
-  <input type='file' name="img2" >
+<input type='file' name="img1" >
+<input type='file' name="img2" >
 
 ```
 
