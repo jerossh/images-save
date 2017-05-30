@@ -10,6 +10,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "connect-multiparty": "^2.0.0",
     "del": "^2.2.2",
     "express": "^4.15.3"
   }
