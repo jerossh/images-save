@@ -3,10 +3,8 @@ const path = require('path');
 const fs = require('fs');
 const mkdirp = require('mkdirp');
 const cryptoRandomString = require('crypto-random-string');
-// const imagemin = require('imagemin');
+const imagemin = require('imagemin');
 // const minimatch = require("minimatch");
-// const JpegTran = require('jpegtran');
-// const OptiPng = require('optipng');
 const debug = require('debug')('save');
 
 // const imagemin = require('gulp-imagemin');
@@ -57,25 +55,39 @@ function saveImgs(option) {
       originalName = imgObj.originalFilename;
 
       if (originalName) {
-        const readData = fs.createReadStream(filePath);
+        // const readData = fs.createReadStream(filePath);
         const ext = originalName.split('.')[1];
         const img = newName+'.'+ext;
         const newPath = `${uploadPath}/${e}/`;  // 必须加点
         const newFile = newPath + img;
 
-        mkdirp(newPath, function() {
-          readData.pipe(fs.createWriteStream(newFile))
-            .on('err', () => {imgsLength--; count--; return console.log('写入发生错误')})
-            .on('finish', ()=> {
-
-              imgslink[e] = `${e}/${img}`;
-              count++;
-
-              if (count === imgsLength) {
-                resolve(imgslink)
-              }
-            });
+        imagemin([filePath], newPath, {
+          plugins: [
+              imageminJpegtran(),
+              imageminPngquant({quality: '65-80'})
+          ]
+        }).then((files)=> {
+          files[0].data.pipe(fs.createWriteStream(newFile))
         })
+
+
+
+        // mkdirp(newPath, function() {
+        //   readData.pipe(fs.createWriteStream(newFile))
+        //     .on('err', () => {imgsLength--; count--; return console.log('写入发生错误')})
+        //     .on('finish', ()=> {
+
+        //       imgslink[e] = `${e}/${img}`;
+        //       count++;
+
+        //       if (count === imgsLength) {
+        //         resolve(imgslink)
+        //       }
+        //     });
+        // })
+        
+
+
       }  else {
         count++;
         if (count === imgsLength) { 
