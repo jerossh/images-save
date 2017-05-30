@@ -1,6 +1,6 @@
 # images-save
 
-Save multi images quickly / 多图片快速保存到多位置
+Save multi images quickly and optimize images | 多图片快速保存到多位置并优化图片大小
 
 ## Installation
 
