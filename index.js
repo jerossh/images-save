@@ -39,7 +39,7 @@ function saveImgs(option) {
       imgObj = files[e];
       if (!imgObj) {reject(new Error(`can't find ${e}, please check imgsName again`))}
       filePath = imgObj.path;
-      originalName = imgObj.originalFilename;
+      originalName = imgObj.name;
       ext = imgObj.type.split('/')[1];
 
       if (originalName) {
@@ -89,7 +89,7 @@ module.exports = saveImgs
 //     });
 // })
 
-
+// connect-multipart 下
 // { fieldName: 'img2',
 // originalFilename: '10.url.png',
 // path: '/var/folders/dn/rbczn1wn0bnf9zsxb6gkf50m0000gn/T/DPhBlFOc2CCjJ_DrRSJdAzMl.png',
@@ -100,5 +100,20 @@ module.exports = saveImgs
 // name: '10.url.png',
 // type: 'image/png' }
 
+// koabody
+// files:
+//    { mediaFile:
+//       File {
+//         domain: null,
+//         _events: {},
+//         _eventsCount: 0,
+//         _maxListeners: undefined,
+//         size: 116638,
+//         path: '/var/folders/b8/hrr_8c_57t35yddhmlp9tynm0000gn/T/upload_29363bfbe6a1e016443f7a2883351c5c',
+//         name: 'about2.jpg',
+//         type: 'image/jpeg',
+//         hash: null,
+//         lastModifiedDate: 2017-06-13T17:14:56.474Z,
+//         _writeStream: [Object] } }
 
 // JPG和JPEG其实是一个东西
