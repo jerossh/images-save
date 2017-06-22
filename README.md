@@ -30,7 +30,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(multipart());
 
 app.post('/upload', function (req, res) {
-    const option = { files: req.files, path: 'public/upload', imgsName: ['img1']};
+    const option = { files: req.files, savePath: 'public/upload', imgsName: ['img1']};
     imgSave(option).then(data => res.redirect('.')) ;
 });
 
@@ -42,8 +42,8 @@ console.log('listening on port 3000');
 multi folders to save ／ 不同图保存到 不同位置
 
 ```js
-const option = { files: req.files, path: 'public/upload', imgsName: ['img1']};
-const option2 = {files: req.files, path: 'public/upload2', imgsName: ['img2']};
+const option = { files: req.files, savePath: 'public/upload', imgsName: ['img1']};
+const option2 = {files: req.files, savePath: 'public/upload2', imgsName: ['img2']};
 
 imgSave(option).then(data => {
     imgSave(option2).then(data => {
@@ -58,7 +58,7 @@ imgSave(option).then(data => {
 ```js
 {
     files: req.files, // require
-    path: 'public/upload', // defalut 'public/'
+    savePath: 'public/upload', // defalut 'public/'
     imgsName: ['img1', 'img4'], // defalut: All images you upload
 }
 ```

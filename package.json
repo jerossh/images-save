@@ -1,6 +1,6 @@
 {
   "name": "images-save",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "Save multi images quickly and optimize images | 多图片快速保存到多位置并优化图片大小",
   "main": "index.js",
   "scripts": {
@@ -28,9 +28,7 @@
     "imagemin-gifsicle": "^5.1.0",
     "imagemin-jpegtran": "^5.0.2",
     "imagemin-pngquant": "^5.0.1",
-    "imagemin-svgo": "^5.2.2",
-    "minimatch": "^3.0.4",
-    "mkdirp": "^0.5.1"
+    "imagemin-svgo": "^5.2.2"
   },
   "devDependencies": {
     "ava": "^0.19.1"

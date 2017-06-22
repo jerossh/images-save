@@ -1,10 +1,6 @@
 'use strict'
-const path = require('path');
-const fs = require('fs');
-const mkdirp = require('mkdirp');
 const cryptoRandomString = require('crypto-random-string');
-const imagemin = require('imagemin');
-// const minimatch = require("minimatch");
+const imagemin = require('imagemin');// const minimatch = require("minimatch");
 const debug = require('debug')('save');
 const imageminJpegtran = require('imagemin-jpegtran');
 const imageminPngquant = require('imagemin-pngquant');
@@ -13,14 +9,14 @@ const imageminSvgo = require('imagemin-svgo');
 
 // const option = {
 //     files: req.files,
-//     path: 'public/upload',
+//     savePath: 'public/upload',
 //     imgsName: [], // defalut: req.filse[input[name]]
 // }
 
 function saveImgs(option) {
   return new Promise(function(resolve, reject) {
 
-    const { files, path, imgsName, newNameForImg } = option;
+    const { files, savePath, imgsName, newNameForImg } = option;
     // debug(files, '参数')
     if (!Array.isArray(imgsName) ) {reject(new TypeError('hope an array'))}
     if (imgsName.length == 0) {
@@ -32,7 +28,7 @@ function saveImgs(option) {
 
     let imgObj, filePath, originalName, ext, imgslink = {}, count = 0;
     const imgsLength = imgsName.length;
-    const uploadPath = path || './public';
+    const uploadPath = savePath || './public';
     const newName = newNameForImg || Date.now() + cryptoRandomString(6);
 
     imgsName.forEach(function (e, i, arr) {
@@ -46,7 +42,8 @@ function saveImgs(option) {
         // const readData = fs.createReadStream(filePath);
         const ext = originalName.split('.')[1];
         const img = newName+'.'+ext;
-        const newPath = `${uploadPath}/${e}/`;  // 必须加点
+        // const newPath = `${uploadPath}/${e}/`;  //  由于 imagessave 的原因，已经无法重命名
+        const newPath = `${uploadPath}/`;  // 必须加点
         const newFile = newPath + img;
 
         imagemin([filePath], newPath, {
