@@ -1,6 +1,6 @@
 {
   "name": "images-save",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Save multi images quickly and optimize images | 多图片快速保存到多位置并优化图片大小",
   "main": "index.js",
   "scripts": {
