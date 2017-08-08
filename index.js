@@ -6,6 +6,8 @@ const imageminJpegtran = require('imagemin-jpegtran');
 const imageminPngquant = require('imagemin-pngquant');
 const imageminGifsicle = require('imagemin-gifsicle');
 const imageminSvgo = require('imagemin-svgo');
+const mkdirp= require('mkdirp');
+const fs= require('fs');
 
 // const option = {
 //     files: req.files,
@@ -16,7 +18,7 @@ const imageminSvgo = require('imagemin-svgo');
 function saveImgs(option) {
   return new Promise(function(resolve, reject) {
 
-    const { files, savePath, imgsName, newNameForImg } = option;
+    const { files, savePath, imgsName, newNameForImg, optimize } = option;
     // debug(files, '参数')
     if (!Array.isArray(imgsName) ) {reject(new TypeError('hope an array'))}
     if (imgsName.length == 0) {
@@ -46,20 +48,44 @@ function saveImgs(option) {
         const newPath = `${uploadPath}/`;  // 必须加点
         const newFile = newPath + img;
 
-        imagemin([filePath], newPath, {
-          plugins: [
-              imageminJpegtran(),
-              imageminPngquant({quality: '65-80'}),
-              imageminGifsicle(),
-              imageminSvgo()
-          ]
-        }).then((files)=> {
-          imgslink[e] = files[0].path;
-          count++;
-          if (count === imgsLength) {
-              resolve(imgslink)
-          }
-        }).catch(err=> reject(err))        
+        if (optimize) { // 优化 
+          imagemin([filePath], newPath, {
+            plugins: [
+                imageminJpegtran(),
+                imageminPngquant({quality: '65-80'}),
+                imageminGifsicle(),
+                imageminSvgo()
+            ]
+          }).then((files)=> {
+            imgslink[e] = './' + files[0].path;
+            if (imgslink[e].indexOf(uploadPath) === 0) {
+              imgslink[e] = imgslink[e].slice(8);
+            }
+            count++;
+            if (count === imgsLength) {
+                resolve(imgslink);
+            }
+          }).catch(err=> reject(err)); // 优化结束
+        } else { // 不优化
+          const readData = fs.createReadStream(filePath);
+          mkdirp(newPath, function() {
+            console.log('新文件名', newFile);
+            readData.pipe(fs.createWriteStream(newFile))
+              .on('err', () => {imgsLength--; count--; return console.log('写入发生错误')})
+              .on('finish', ()=> {
+                // imgslink[e] = `${e}/${img}`;
+                imgslink[e] = newFile;
+                if (imgslink[e].indexOf(uploadPath) === 0) {
+                  imgslink[e] = imgslink[e].slice(8);
+                }
+                count++;
+                if (count === imgsLength) {
+                  resolve(imgslink)
+                }
+              });
+          })
+        }
+        
       }  else {
         count++;
         if (count === imgsLength) { 
@@ -108,7 +134,7 @@ module.exports = saveImgs
 //         size: 116638,
 //         path: '/var/folders/b8/hrr_8c_57t35yddhmlp9tynm0000gn/T/upload_29363bfbe6a1e016443f7a2883351c5c',
 //         name: 'about2.jpg',
-//         type: 'image/jpeg',
+//         type: 'image/jpeg', 
 //         hash: null,
 //         lastModifiedDate: 2017-06-13T17:14:56.474Z,
 //         _writeStream: [Object] } }

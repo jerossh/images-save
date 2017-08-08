@@ -27,24 +27,20 @@ del(['public/*', '!public/index.html']).then(paths => {
 });
 
 
-app.get('/a', function (req,res) {
-    console.log('响应')
-    res.send('u 我')
-})
-
 app.post('/upload', function (req, res) {
     console.log('响应')
     // debug(req)
 
     const option = {
         files: req.files,
-        savePath: 'public/upload',
-        imgsName: ['img1']
+        savePath: __dirname + '/public/upload',
+        imgsName: ['img1'],
+
     }
 
     const option2 = {
         files: req.files,
-        savePath: 'public/upload2',
+        savePath:__dirname + '/public/upload2',
         imgsName: ['img2']
     }
     imgSave(option).then(data => {

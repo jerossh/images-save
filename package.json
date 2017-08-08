@@ -4,7 +4,7 @@
   "description": "Save multi images quickly and optimize images | 多图片快速保存到多位置并优化图片大小",
   "main": "index.js",
   "scripts": {
-    "test": "ava"
+    "test": "DEBUG=app nodemon example/app.js"
   },
   "repository": {
     "type": "git",
