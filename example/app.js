@@ -33,14 +33,14 @@ app.post('/upload', function (req, res) {
 
     const option = {
         files: req.files,
-        savePath: __dirname + '/public/upload',
+        savePath:  './public/upload',
         imgsName: ['img1'],
 
     }
 
     const option2 = {
         files: req.files,
-        savePath:__dirname + '/public/upload2',
+        savePath: './public/upload2',
         imgsName: ['img2']
     }
     imgSave(option).then(data => {

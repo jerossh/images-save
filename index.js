@@ -58,9 +58,9 @@ function saveImgs(option) {
             ]
           }).then((files)=> {
             imgslink[e] = './' + files[0].path;
-            if (imgslink[e].indexOf(uploadPath) === 0) {
-              imgslink[e] = imgslink[e].slice(8);
-            }
+            // if (imgslink[e].indexOf(uploadPath) === 0) {
+            //   imgslink[e] = imgslink[e].slice(8);
+            // }
             count++;
             if (count === imgsLength) {
                 resolve(imgslink);
@@ -75,9 +75,10 @@ function saveImgs(option) {
               .on('finish', ()=> {
                 // imgslink[e] = `${e}/${img}`;
                 imgslink[e] = newFile;
-                if (imgslink[e].indexOf(uploadPath) === 0) {
-                  imgslink[e] = imgslink[e].slice(8);
-                }
+                // if (imgslink[e].indexOf(uploadPath) === 0) {
+
+                //   imgslink[e] = imgslink[e].slice(uploadPath.length);
+                // }
                 count++;
                 if (count === imgsLength) {
                   resolve(imgslink)
